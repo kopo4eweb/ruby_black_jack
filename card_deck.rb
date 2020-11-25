@@ -2,10 +2,10 @@
 
 # card deck class
 class CardDeck
-  SYMBOLS = ['♡', '♤', '♢', '♧']
-  VALS = %w[2 3 4 5 6 7 8 9 10 V D K T]
+  SYMBOLS = ['♡', '♤', '♢', '♧'].freeze
+  VALS = %w[2 3 4 5 6 7 8 9 10 V D K T].freeze
 
-  def initialize    
+  def initialize
     @pack = []
     genegate
     shuffle
@@ -26,7 +26,7 @@ class CardDeck
       VALS.each do |val|
         var_val = val.to_i.positive? ? val.to_i : 10
         var_val = 11 if val == 'T'
-        @pack << {"#{val}#{symbol}" => {name: val, val: var_val}}
+        @pack << { "#{val}#{symbol}" => { name: val, val: var_val } }
       end
     end
   end
