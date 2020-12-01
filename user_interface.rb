@@ -22,11 +22,11 @@ class UserInterface
         when 1
           raise ArgumentError, '! Unknown operation, try again.' unless @user.may_skip?
 
-          skip
+          @user.skip_turn
         when 2
-          @user.add_card(GameInterface.new_card)
+          @user.hand.add_card
         when 3
-          @user.open_card = true
+          @user.open_card
         else
           puts '! Unknown operation, try again.'
         end
@@ -36,9 +36,5 @@ class UserInterface
       end
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
-
-    def skip
-      @user.skip_turn
-    end
   end
 end

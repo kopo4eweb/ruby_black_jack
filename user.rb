@@ -1,44 +1,28 @@
 # frozen_string_literal: true
 
+require_relative 'const'
+
 # class used real user and computer
 class User
-  SKIP = 1
-  MAX_CARDS = 3
-  ACCOUNT = 100
-  MAX_SUM = 21
+  include Const
 
-  attr_reader :cards, :name, :account, :cards_sum
-  attr_writer :open_card
+  attr_accessor :hand
+  attr_reader :name, :account
 
   def initialize(name, account = ACCOUNT, skip = SKIP, max_cards = MAX_CARDS)
     @name = name
     @account = account
-    @cards = []
     @skip = skip
     @max_cards = max_cards
-    @cards_sum = 0
-    @losing = false
     @open_card = false
-  end
-
-  def cards_sum=(value)
-    @losing = true if value > MAX_SUM
-    @cards_sum = value
   end
 
   def reset_game
-    @cards = []
     @skip = SKIP
-    @cards_sum = 0
     @open_card = false
-    @losing = false
   end
 
-  def add_card(card)
-    @cards << card
-  end
-
-  def rate(value = 10)
+  def rate(value = DEF_USER_RATE)
     @account -= value
     value
   end
@@ -51,12 +35,16 @@ class User
     @skip -= 1
   end
 
+  def open_card
+    @open_card = true
+  end
+
   def losing?
-    @losing
+    @hand.sum > MAX_SUM
   end
 
   def may_get_card?
-    @cards.size < @max_cards
+    @hand.cards.size < @max_cards
   end
 
   def no_may_get_card?

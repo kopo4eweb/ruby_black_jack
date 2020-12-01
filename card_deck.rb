@@ -1,49 +1,32 @@
 # frozen_string_literal: true
 
+require_relative 'const'
+require_relative 'card'
+
 # card deck class
 class CardDeck
-  SYMBOLS = ['♡', '♤', '♢', '♧'].freeze
-  VALS = %w[2 3 4 5 6 7 8 9 10 V D K T].freeze
-  VAL_CARD_T = 11
-  VAL_CARD_PICTURE = 10
-  MAX_SUM = 21
-
-  def self.sum_card(cards)
-    sum = 0
-    t = 0
-
-    cards.each do |card|
-      sum += card[:val]
-      t += 1 if card[:name] == 'T'
-    end
-
-    1.upto(t) { sum -= (VAL_CARD_T - 1) if sum > MAX_SUM && t.positive? }
-
-    sum
-  end
+  include Const
 
   def initialize
-    @pack = []
+    @cards = []
     genegate
-    shuffle
+    shuffle!
   end
 
   def card
-    @pack.pop
+    @cards.pop
   end
 
   private
 
-  def shuffle
-    @pack.shuffle!
+  def shuffle!
+    @cards.shuffle!
   end
 
   def genegate
     SYMBOLS.each do |symbol|
-      VALS.each do |val|
-        var_val = val.to_i.positive? ? val.to_i : VAL_CARD_PICTURE
-        var_val = VAL_CARD_T if val == 'T'
-        @pack << { symbol: "#{val}#{symbol}", name: val, val: var_val }
+      VALS.each do |value|
+        @cards << Card.new(suit: symbol, value: value)
       end
     end
   end

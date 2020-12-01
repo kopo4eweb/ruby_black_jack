@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'const'
 require_relative 'game'
 require_relative 'user'
 require_relative 'card_deck'
@@ -8,7 +9,7 @@ require_relative 'user_ai'
 
 # interface for class game
 class GameInterface
-  DEALER_NAME = 'Dealer'
+  extend Const
 
   @game = nil
 
@@ -63,7 +64,9 @@ class GameInterface
     def new_game
       loop do
         puts @game.gamers_account
-        @game.new_card_deck(CardDeck.new)
+        card_deck = CardDeck.new
+        Hand.card_deck = card_deck
+        @game.card_deck(card_deck)
         @game.hand_over_cards
         @game.rate
         start_game
@@ -97,33 +100,23 @@ class GameInterface
       puts @game.gamers_account
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Style/OptionalBooleanParameter
+    # rubocop:disable Metrics/AbcSize, Style/OptionalBooleanParameter
     def show_cards(show_all = false)
       puts 'Cards:'
 
       # user
       print "\t#{@game.user.name} "
-      @game.user.cards.each do |card|
-        print "[#{card[:symbol]}]"
-      end
-      @game.user.cards_sum = CardDeck.sum_card(@game.user.cards)
-      print " sum: #{@game.user.cards_sum}"
+      @game.user.hand.cards.each { |card| print "[#{card.value}#{card.suit}]" }
+      print " sum: #{@game.user.hand.sum}"
       print "\n"
 
       # dealer
       print "\t#{@game.dealer.name} "
-      @game.dealer.cards.each do |card|
-        print show_all ? "[#{card[:symbol]}]" : '[*]'
-      end
-      @game.dealer.cards_sum = CardDeck.sum_card(@game.dealer.cards)
-      print " sum: #{@game.dealer.cards_sum}" if show_all
+      @game.dealer.hand.cards.each  { |card| print show_all ? "[#{card.value}#{card.suit}]" : '[*]' }
+      print " sum: #{@game.dealer.hand.sum}" if show_all
       print "\n"
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Style/OptionalBooleanParameter
-
-    def new_card
-      @game.new_card
-    end
+    # rubocop:enable Metrics/AbcSize, Style/OptionalBooleanParameter
 
     def reset_users
       @game.user.reset_game
