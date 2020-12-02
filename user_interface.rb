@@ -28,7 +28,7 @@ class UserInterface
         when 3
           @user.open_card
         else
-          puts '! Unknown operation, try again.'
+          raise ArgumentError, '! Unknown operation, try again.'
         end
       rescue StandardError => e
         puts e.message
