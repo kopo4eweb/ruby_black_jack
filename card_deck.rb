@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'const'
 require_relative 'card'
 
 # card deck class
 class CardDeck
-  include Const
+  SYMBOLS = ['♡', '♤', '♢', '♧'].freeze
+  VALS = %w[2 3 4 5 6 7 8 9 10 V D K T].freeze
 
   def initialize
     @cards = []

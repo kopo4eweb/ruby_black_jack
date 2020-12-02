@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'const'
 require_relative 'game'
 require_relative 'user'
 require_relative 'card_deck'
@@ -9,7 +8,7 @@ require_relative 'user_ai'
 
 # interface for class game
 class GameInterface
-  extend Const
+  DEALER_NAME = 'Dealer'
 
   @game = nil
 

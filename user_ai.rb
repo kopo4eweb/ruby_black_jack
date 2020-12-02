@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'const'
-
 # Ai-user for dealer
 class UserAi
-  extend Const
+  DEALER_MAX_SUM = 17
 
   class << self
     def thinking(user)

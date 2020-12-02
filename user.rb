@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'const'
-
 # class used real user and computer
 class User
-  include Const
+  SKIP = 1
+  MAX_CARDS = 3
+  ACCOUNT = 100
+  DEF_USER_RATE = 10
+  MAX_SUM = 21
 
   attr_accessor :hand
   attr_reader :name, :account

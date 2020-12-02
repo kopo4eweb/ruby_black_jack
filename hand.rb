@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'const'
-
 # action to with cards at gamer
 class Hand
-  include Const
+  VAL_CARD_T = 11
+  VAL_CARD_PICTURE = 10
+  MAX_SUM = 21
 
   @card_deck = nil
 
